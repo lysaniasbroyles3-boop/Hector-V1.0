@@ -1,0 +1,152 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HECTOR | Device Intelligence</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="topbar">
+    <div class="brand">
+        <div class="logo">H</div>
+        <div>
+            <h1>HECTOR</h1>
+            <p>DEVICE INTELLIGENCE</p>
+        </div>
+    </div>
+
+    <div class="system-status">
+        <span class="status-dot"></span>
+        SYSTEM READY
+    </div>
+</header>
+
+<main class="container">
+
+    <section class="hero">
+        <p class="eyebrow">HARDWARE ANALYSIS PLATFORM</p>
+        <h2>Know Your Device.</h2>
+        <p class="subtitle">
+            Analyze your device, inspect browser capabilities,
+            and understand your system's performance.
+        </p>
+
+        <button id="scanButton" onclick="runDiagnostics()">
+            RUN FULL DIAGNOSTICS
+        </button>
+
+        <div class="progress-container">
+            <div id="progressBar"></div>
+        </div>
+
+        <p id="scanStatus">Waiting for diagnostic scan...</p>
+    </section>
+
+    <section class="section-heading">
+        <div>
+            <p class="eyebrow">SYSTEM OVERVIEW</p>
+            <h2>Diagnostic Results</h2>
+        </div>
+        <span id="scanLabel">NO SCAN YET</span>
+    </section>
+
+    <section class="dashboard">
+
+        <div class="metric-card">
+            <span class="metric-icon">▦</span>
+            <p>PROCESSOR THREADS</p>
+            <h3 id="cpu">--</h3>
+            <small>Logical processor count</small>
+        </div>
+
+        <div class="metric-card">
+            <span class="metric-icon">◈</span>
+            <p>ESTIMATED RAM</p>
+            <h3 id="ram">--</h3>
+            <small>Browser-reported estimate</small>
+        </div>
+
+        <div class="metric-card">
+            <span class="metric-icon">◉</span>
+            <p>GPU</p>
+            <h3 id="gpu">--</h3>
+            <small id="gpuDetail">Graphics information</small>
+        </div>
+
+        <div class="metric-card">
+            <span class="metric-icon">▤</span>
+            <p>BROWSER STORAGE</p>
+            <h3 id="storage">--</h3>
+            <small id="storageDetail">Storage quota estimate</small>
+        </div>
+
+        <div class="metric-card">
+            <span class="metric-icon">⌁</span>
+            <p>INTERNET CONNECTION</p>
+            <h3 id="network">--</h3>
+            <small id="networkDetail">Connection information</small>
+        </div>
+
+        <div class="metric-card">
+            <span class="metric-icon">▣</span>
+            <p>BATTERY</p>
+            <h3 id="battery">--</h3>
+            <small id="batteryDetail">Battery information</small>
+        </div>
+
+    </section>
+
+    <section class="details-panel">
+        <p class="eyebrow">DEVICE INTELLIGENCE</p>
+        <h2>System Information</h2>
+
+        <div class="detail-row">
+            <span>Operating Platform</span>
+            <strong id="platform">Not scanned</strong>
+        </div>
+
+        <div class="detail-row">
+            <span>Browser</span>
+            <strong id="browser">Not scanned</strong>
+        </div>
+
+        <div class="detail-row">
+            <span>Screen Resolution</span>
+            <strong id="screen">Not scanned</strong>
+        </div>
+
+        <div class="detail-row">
+            <span>Device Pixel Ratio</span>
+            <strong id="pixelRatio">Not scanned</strong>
+        </div>
+
+        <div class="detail-row">
+            <span>WebGPU Support</span>
+            <strong id="webgpu">Not scanned</strong>
+        </div>
+
+        <div class="detail-row">
+            <span>Browser Cookies</span>
+            <strong id="cookies">Not scanned</strong>
+        </div>
+
+        <div class="detail-row">
+            <span>Touchscreen Support</span>
+            <strong id="touch">Not scanned</strong>
+        </div>
+    </section>
+
+    <footer>
+        HECTOR DEVICE INTELLIGENCE SYSTEM
+        <p>Version 1.0 | Smarter Device Diagnostics</p>
+    </footer>
+
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>
