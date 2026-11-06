@@ -529,3 +529,27 @@ window.addEventListener("load", () => {
 
 });
 
+
+const HECTOR_API_URL = "https://hector-ai-ub0n.onrender.com";
+
+async function testHectorConnection() {
+    try {
+        const response = await fetch(
+            `${HECTOR_API_URL}/api/health`
+        );
+
+        if (!response.ok) {
+            throw new Error("Backend connection failed");
+        }
+
+        const data = await response.json();
+
+        console.log("HECTOR BACKEND:", data.status);
+        return data.status === "online";
+
+    } catch (error) {
+        console.error("HECTOR CONNECTION ERROR:", error);
+        return false;
+    }
+}
+
