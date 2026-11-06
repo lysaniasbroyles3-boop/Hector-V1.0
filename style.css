@@ -1,0 +1,274 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #080d18;
+    color: #edf3ff;
+    font-family: 'Inter', sans-serif;
+}
+
+.topbar {
+    height: 85px;
+    padding: 0 7%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #0d1524;
+    border-bottom: 1px solid #1c2b42;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.logo {
+    width: 46px;
+    height: 46px;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(135deg, #1685ff, #704dff);
+    border-radius: 12px;
+    font-size: 26px;
+    font-weight: 800;
+}
+
+.brand h1 {
+    font-size: 21px;
+    letter-spacing: 3px;
+}
+
+.brand p {
+    color: #7890b2;
+    font-size: 9px;
+    letter-spacing: 2px;
+    margin-top: 4px;
+}
+
+.system-status {
+    color: #5ce5a2;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.status-dot {
+    display: inline-block;
+    height: 8px;
+    width: 8px;
+    background: #5ce5a2;
+    border-radius: 50%;
+    margin-right: 7px;
+}
+
+.container {
+    width: 86%;
+    max-width: 1250px;
+    margin: auto;
+}
+
+.hero {
+    padding: 85px 0 65px;
+}
+
+.eyebrow {
+    color: #399bff;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin-bottom: 15px;
+}
+
+.hero h2 {
+    font-size: clamp(36px, 6vw, 58px);
+    font-weight: 800;
+    letter-spacing: -2px;
+}
+
+.subtitle {
+    color: #8da2bf;
+    max-width: 600px;
+    line-height: 1.8;
+    margin-top: 15px;
+}
+
+button {
+    background: linear-gradient(110deg, #167bff, #6750f5);
+    color: white;
+    border: none;
+    padding: 17px 28px;
+    border-radius: 8px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    margin-top: 30px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px #246bff44;
+}
+
+button:disabled {
+    opacity: 0.6;
+    cursor: wait;
+}
+
+.progress-container {
+    height: 5px;
+    max-width: 400px;
+    background: #1b2a40;
+    border-radius: 10px;
+    margin-top: 25px;
+    overflow: hidden;
+}
+
+#progressBar {
+    height: 100%;
+    width: 0%;
+    background: #389bff;
+    transition: width 0.3s;
+}
+
+#scanStatus {
+    color: #8198b8;
+    font-size: 12px;
+    margin-top: 12px;
+}
+
+.section-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 22px;
+}
+
+.section-heading h2,
+.details-panel h2 {
+    font-size: 23px;
+}
+
+#scanLabel {
+    color: #8498b4;
+    font-size: 10px;
+    letter-spacing: 1px;
+}
+
+.dashboard {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 17px;
+}
+
+.metric-card {
+    background: #101b2c;
+    border: 1px solid #20314a;
+    border-radius: 13px;
+    padding: 25px;
+    min-width: 0;
+}
+
+.metric-icon {
+    color: #459cff;
+    font-size: 23px;
+}
+
+.metric-card p {
+    color: #8da2bf;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-top: 20px;
+}
+
+.metric-card h3 {
+    font-size: 25px;
+    margin-top: 10px;
+    overflow-wrap: anywhere;
+}
+
+.metric-card small {
+    display: block;
+    color: #7186a4;
+    font-size: 11px;
+    margin-top: 9px;
+}
+
+.details-panel {
+    background: #101b2c;
+    border: 1px solid #20314a;
+    border-radius: 13px;
+    padding: 30px;
+    margin-top: 35px;
+}
+
+.detail-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 19px 0;
+    border-bottom: 1px solid #24344a;
+    font-size: 13px;
+}
+
+.detail-row:last-child {
+    border-bottom: none;
+}
+
+.detail-row span {
+    color: #8da2bf;
+}
+
+.detail-row strong {
+    text-align: right;
+    overflow-wrap: anywhere;
+}
+
+footer {
+    text-align: center;
+    color: #69809f;
+    font-size: 10px;
+    letter-spacing: 1px;
+    padding: 55px 0 30px;
+}
+
+footer p {
+    margin-top: 9px;
+    color: #536782;
+}
+
+@media (max-width: 750px) {
+    .dashboard {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .container {
+        width: 90%;
+    }
+
+    .topbar {
+        padding: 0 5%;
+    }
+}
+
+@media (max-width: 480px) {
+    .dashboard {
+        grid-template-columns: 1fr;
+    }
+
+    .detail-row {
+        font-size: 11px;
+    }
+
+    .hero {
+        padding-top: 55px;
+    }
+}
