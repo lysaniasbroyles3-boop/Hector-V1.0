@@ -245,6 +245,141 @@ footer p {
     color: #536782;
 }
 
+/* =================================
+   HECTOR CINEMATIC STARTUP ANIMATION
+================================= */
+
+#introAnimation {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    background: #050a14;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    animation: startupExit .6s ease 3.2s forwards;
+}
+
+#introAnimation::before {
+    content: "";
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    border: 1px solid #258bff44;
+    border-radius: 50%;
+    box-shadow: 0 0 90px #1685ff22;
+    animation: pulseRing 1.4s ease-out;
+}
+
+.startup-content {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.startup-logo {
+    font-size: 115px;
+    font-weight: 800;
+    color: #65baff;
+    text-shadow: 0 0 20px #1685ff, 0 0 65px #1685ff;
+    animation: startupH 1.25s cubic-bezier(.16,1,.3,1) forwards;
+}
+
+.startup-name {
+    font-size: 48px;
+    font-weight: 800;
+    letter-spacing: 9px;
+    margin-left: 15px;
+    opacity: 0;
+    animation: startupName .55s ease-out 1.2s forwards;
+}
+
+.startup-subtitle {
+    position: absolute;
+    left: 140px;
+    top: 125px;
+    color: #55aaff;
+    font-size: 10px;
+    letter-spacing: 5px;
+    white-space: nowrap;
+    opacity: 0;
+    animation: startupName .5s ease-out 1.55s forwards;
+}
+
+@keyframes startupH {
+    0% {
+        opacity: 0;
+        transform: scale(.1) rotate(-25deg);
+    }
+
+    18% {
+        opacity: 1;
+        transform: scale(1.4) rotate(0deg);
+    }
+
+    30% {
+        transform: scale(.85) rotate(0deg);
+    }
+
+    48% {
+        transform: scale(1.2) rotate(45deg);
+    }
+
+    70%, 100% {
+        transform: scale(1) rotate(45deg);
+    }
+}
+
+@keyframes startupName {
+    from {
+        opacity: 0;
+        transform: translateX(45px);
+        filter: blur(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+        filter: blur(0);
+    }
+}
+
+@keyframes pulseRing {
+    0% {
+        transform: scale(.2);
+        opacity: 0;
+    }
+
+    40% {
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(1.8);
+        opacity: 0;
+    }
+}
+
+@keyframes startupExit {
+    to {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #introAnimation,
+    .startup-logo,
+    .startup-name,
+    .startup-subtitle,
+    #introAnimation::before {
+        animation-duration: 0.01ms;
+        animation-delay: 0ms;
+    }
+}
+
 @media (max-width: 750px) {
     .dashboard {
         grid-template-columns: repeat(2, 1fr);
@@ -271,110 +406,21 @@ footer p {
     .hero {
         padding-top: 55px;
     }
-}
-/* HECTOR STARTUP ANIMATION */
 
-.intro-animation {
-    position: fixed;
-    inset: 0;
-    z-index: 9999;
-    background: #080d18;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    animation: introDisappear 0.5s ease forwards;
-    animation-delay: 2.5s;
-}
-
-.intro-content {
-    display: flex;
-    align-items: center;
-    position: relative;
-}
-
-.intro-h {
-    font-size: 110px;
-    font-weight: 800;
-    color: #55aaff;
-    text-shadow: 0 0 25px #1685ff, 0 0 70px #1685ff;
-    animation: hLaunch 1.5s cubic-bezier(.16,1,.3,1) forwards;
-}
-
-.intro-name {
-    font-size: 48px;
-    font-weight: 800;
-    letter-spacing: 9px;
-    margin-left: 18px;
-    opacity: 0;
-    animation: nameReveal 0.5s ease forwards;
-    animation-delay: 1.25s;
-}
-
-.intro-subtitle {
-    position: absolute;
-    left: 130px;
-    top: 95px;
-    font-size: 11px;
-    letter-spacing: 5px;
-    color: #55aaff;
-    white-space: nowrap;
-    opacity: 0;
-    animation: nameReveal 0.5s ease forwards;
-    animation-delay: 1.55s;
-}
-
-@keyframes hLaunch {
-    0% {
-        transform: scale(.2) rotate(-25deg);
-        opacity: 0;
+    .startup-logo {
+        font-size: 70px;
     }
 
-    18% {
-        transform: scale(1.3) rotate(8deg);
-        opacity: 1;
+    .startup-name {
+        font-size: 27px;
+        letter-spacing: 5px;
+        margin-left: 8px;
     }
 
-    30% {
-        transform: scale(.95) rotate(0deg);
-    }
-
-    48% {
-        transform: scale(1.1) rotate(45deg);
-    }
-
-    70%, 100% {
-        transform: scale(1) rotate(45deg);
+    .startup-subtitle {
+        left: 80px;
+        top: 85px;
+        font-size: 7px;
     }
 }
 
-@keyframes nameReveal {
-    from {
-        opacity: 0;
-        transform: translateX(35px);
-        filter: blur(8px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateX(0);
-        filter: blur(0);
-    }
-}
-
-@keyframes introDisappear {
-    to {
-        opacity: 0;
-        visibility: hidden;
-        pointer-events: none;
-    }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .intro-animation,
-    .intro-h,
-    .intro-name,
-    .intro-subtitle {
-        animation-duration: 0.01ms;
-        animation-delay: 0ms;
-    }
-}
