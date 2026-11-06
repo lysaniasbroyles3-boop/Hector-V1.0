@@ -1,7 +1,11 @@
 
 /* ==========================================
-   HECTOR 2.0 - DEVICE INTELLIGENCE ENGINE
+   HECTOR 2.1 - DEVICE INTELLIGENCE ENGINE
 ========================================== */
+
+const HECTOR_API_URL = "https://hector-ai-ub0n.onrender.com";
+
+/* PAGE NAVIGATION */
 
 function showPage(pageId, button) {
     document.querySelectorAll(".page").forEach(page => {
@@ -18,9 +22,13 @@ function showPage(pageId, button) {
     if (button) button.classList.add("active");
 
     window.scrollTo({ top: 0, behavior: "smooth" });
+
+    if (pageId === "ai") {
+        checkHectorConnection();
+    }
 }
 
-/* Safe information display */
+/* SAFE INFORMATION DISPLAY */
 
 function setInfo(id, value) {
     const element = document.getElementById(id);
@@ -61,9 +69,7 @@ async function runDiagnostics() {
 
         updateProgress(5, "Initializing HECTOR diagnostic engine...");
 
-        /* ==================================
-           PAGE 1 - SYSTEM INFORMATION
-        ================================== */
+        /* PAGE 1 - SYSTEM */
 
         updateProgress(15, "Inspecting processor...");
 
@@ -85,28 +91,15 @@ async function runDiagnostics() {
             "Not exposed"
         );
 
-        setInfo(
-            "screen",
-            screen.width + " × " + screen.height +
-            " pixels"
-        );
-
-        setInfo(
-            "pixelRatio",
-            window.devicePixelRatio || "Unknown"
-        );
+        setInfo("screen", screen.width + " × " + screen.height + " pixels");
+        setInfo("pixelRatio", window.devicePixelRatio || "Unknown");
 
         setInfo(
             "touch",
-            navigator.maxTouchPoints > 0
-                ? "Supported"
-                : "Not detected"
+            navigator.maxTouchPoints > 0 ? "Supported" : "Not detected"
         );
 
-        setInfo(
-            "colorDepth",
-            screen.colorDepth + " bits"
-        );
+        setInfo("colorDepth", screen.colorDepth + " bits");
 
         /* GRAPHICS */
 
@@ -125,9 +118,7 @@ async function runDiagnostics() {
         if (gl) {
             graphicsAvailable = true;
 
-            const extension = gl.getExtension(
-                "WEBGL_debug_renderer_info"
-            );
+            const extension = gl.getExtension("WEBGL_debug_renderer_info");
 
             if (extension) {
                 gpuName = gl.getParameter(
@@ -137,7 +128,6 @@ async function runDiagnostics() {
                 gpuDetails = "Browser-reported graphics renderer";
             } else {
                 gpuName = "Graphics detected";
-
                 gpuDetails = "Renderer name protected by browser";
             }
         } else {
@@ -161,20 +151,14 @@ async function runDiagnostics() {
 
                 const battery = await navigator.getBattery();
 
-                setInfo(
-                    "battery",
-                    Math.round(battery.level * 100) + "%"
-                );
+                setInfo("battery", Math.round(battery.level * 100) + "%");
 
                 setInfo(
                     "batteryDetail",
                     battery.charging ? "Currently charging" : "Not charging"
                 );
 
-                setInfo(
-                    "batteryTest",
-                    "Battery information detected"
-                );
+                setInfo("batteryTest", "Battery information detected");
 
             } else {
                 setInfo("battery", "Unavailable");
@@ -187,11 +171,9 @@ async function runDiagnostics() {
             setInfo("batteryTest", "Unavailable");
         }
 
-        /* ==================================
-           PAGE 2 - BROWSER INFORMATION
-        ================================== */
+        /* PAGE 2 - BROWSER */
 
-        updateProgress(45, "Inspecting Chrome browser...");
+        updateProgress(45, "Inspecting browser...");
 
         const ua = navigator.userAgent;
 
@@ -219,8 +201,6 @@ async function runDiagnostics() {
             browserVersion = ua.match(/Version\/([\d.]+)/)?.[1] || "Unknown";
         }
 
-        /* Try higher-detail browser identification */
-
         if (navigator.userAgentData) {
             try {
                 const details =
@@ -245,25 +225,10 @@ async function runDiagnostics() {
                     details.platform || navigator.userAgentData.platform
                 );
 
-                setInfo(
-                    "browserArchitecture",
-                    details.architecture || "Not exposed"
-                );
-
-                setInfo(
-                    "browserBitness",
-                    details.bitness || "Not exposed"
-                );
-
-                setInfo(
-                    "browserModel",
-                    details.model || "Not exposed"
-                );
-
-                setInfo(
-                    "platformVersion",
-                    details.platformVersion || "Not exposed"
-                );
+                setInfo("browserArchitecture", details.architecture || "Not exposed");
+                setInfo("browserBitness", details.bitness || "Not exposed");
+                setInfo("browserModel", details.model || "Not exposed");
+                setInfo("platformVersion", details.platformVersion || "Not exposed");
 
             } catch {
                 setInfo("browserArchitecture", "Not exposed");
@@ -278,10 +243,8 @@ async function runDiagnostics() {
             setInfo("platformVersion", "Not exposed");
         }
 
-        setInfo("browser", browserName);
         setInfo("browserName", browserName);
         setInfo("browserVersion", browserVersion);
-
         setInfo("userAgent", ua);
 
         setInfo(
@@ -291,41 +254,18 @@ async function runDiagnostics() {
             "Not exposed"
         );
 
-        setInfo(
-            "language",
-            navigator.language || "Unknown"
-        );
-
-        setInfo(
-            "onlineStatus",
-            navigator.onLine ? "Online" : "Offline"
-        );
-
-        setInfo(
-            "cookies",
-            navigator.cookieEnabled ? "Enabled" : "Disabled"
-        );
-
+        setInfo("language", navigator.language || "Unknown");
+        setInfo("onlineStatus", navigator.onLine ? "Online" : "Offline");
+        setInfo("cookies", navigator.cookieEnabled ? "Enabled" : "Disabled");
         setInfo("javascript", "Enabled");
-
-        setInfo(
-            "doNotTrack",
-            navigator.doNotTrack || "Not specified"
-        );
+        setInfo("doNotTrack", navigator.doNotTrack || "Not specified");
 
         /* BROWSER CAPABILITIES */
 
         updateProgress(55, "Testing browser technologies...");
 
-        setInfo(
-            "webgpu",
-            navigator.gpu ? "Available" : "Not available"
-        );
-
-        setInfo(
-            "webgl",
-            gl ? "Supported" : "Not supported"
-        );
+        setInfo("webgpu", navigator.gpu ? "Available" : "Not available");
+        setInfo("webgl", gl ? "Supported" : "Not supported");
 
         setInfo(
             "serviceWorker",
@@ -348,10 +288,7 @@ async function runDiagnostics() {
             storageAvailable = false;
         }
 
-        setInfo(
-            "localStorage",
-            storageAvailable ? "Available" : "Restricted"
-        );
+        setInfo("localStorage", storageAvailable ? "Available" : "Restricted");
 
         setInfo(
             "webrtc",
@@ -375,9 +312,7 @@ async function runDiagnostics() {
                 : "Light"
         );
 
-        /* ==================================
-           PAGE 3 - NETWORK INFORMATION
-        ================================== */
+        /* PAGE 3 - NETWORK */
 
         updateProgress(70, "Analyzing network connection...");
 
@@ -397,10 +332,7 @@ async function runDiagnostics() {
                 : "Connection details restricted"
         );
 
-        setInfo(
-            "internetStatus",
-            online ? "Browser reports online" : "Offline"
-        );
+        setInfo("internetStatus", online ? "Browser reports online" : "Offline");
 
         setInfo(
             "networkType",
@@ -409,10 +341,7 @@ async function runDiagnostics() {
             "Not exposed"
         );
 
-        setInfo(
-            "connectionType",
-            connection?.effectiveType || "Unknown"
-        );
+        setInfo("connectionType", connection?.effectiveType || "Unknown");
 
         setInfo(
             "downloadSpeed",
@@ -428,10 +357,7 @@ async function runDiagnostics() {
                 : "Not exposed"
         );
 
-        setInfo(
-            "networkTest",
-            online ? "Browser reports online" : "Offline"
-        );
+        setInfo("networkTest", online ? "Browser reports online" : "Offline");
 
         /* STORAGE */
 
@@ -446,16 +372,8 @@ async function runDiagnostics() {
                 const quota = storage.quota || 0;
                 const available = Math.max(0, quota - used);
 
-                setInfo(
-                    "storage",
-                    quota ? readableBytes(quota) : "Unknown"
-                );
-
-                setInfo(
-                    "storageDetail",
-                    readableBytes(used) + " used"
-                );
-
+                setInfo("storage", quota ? readableBytes(quota) : "Unknown");
+                setInfo("storageDetail", readableBytes(used) + " used");
                 setInfo("storageQuota", readableBytes(quota));
                 setInfo("storageUsed", readableBytes(used));
                 setInfo("storageAvailable", readableBytes(available));
@@ -495,21 +413,12 @@ async function runDiagnostics() {
             setInfo("persistentStorage", "Unavailable");
         }
 
-        /* ==================================
-           FINISH
-        ================================== */
-
         updateProgress(100, "HECTOR diagnostic scan complete!");
-
         setInfo("scanLabel", "SCAN COMPLETE");
 
     } catch (error) {
 
-        updateProgress(
-            100,
-            "Diagnostic error: " + error.message
-        );
-
+        updateProgress(100, "Diagnostic error: " + error.message);
         console.error("HECTOR diagnostic error:", error);
 
     } finally {
@@ -520,36 +429,164 @@ async function runDiagnostics() {
 }
 
 /* ==========================================
+   HECTOR AI - BACKEND CONNECTION
+========================================== */
+
+async function checkHectorConnection() {
+
+    const status = document.getElementById("hectorConnection");
+
+    if (status) {
+        status.textContent = "CHECKING CONNECTION...";
+        status.className = "ai-status";
+    }
+
+    try {
+        const response = await fetch(
+            HECTOR_API_URL + "/api/health"
+        );
+
+        if (!response.ok) {
+            throw new Error("Backend returned an error");
+        }
+
+        const data = await response.json();
+
+        if (data.status !== "online") {
+            throw new Error("Backend is not reporting online");
+        }
+
+        if (status) {
+            status.textContent = "● BACKEND ONLINE";
+            status.className = "ai-status online";
+        }
+
+        return true;
+
+    } catch (error) {
+
+        if (status) {
+            status.textContent = "● BACKEND OFFLINE";
+            status.className = "ai-status offline";
+        }
+
+        console.error("HECTOR connection problem:", error);
+        return false;
+    }
+}
+
+/* ==========================================
+   HECTOR AI - CHAT MESSAGES
+========================================== */
+
+function addHectorMessage(message, sender) {
+
+    const chat = document.getElementById("aiChat");
+
+    if (!chat) return;
+
+    const messageElement = document.createElement("div");
+
+    messageElement.className =
+        sender === "user" ? "ai-message user" : "ai-message bot";
+
+    messageElement.textContent = message;
+
+    chat.appendChild(messageElement);
+
+    chat.scrollTop = chat.scrollHeight;
+}
+
+/* SEND A MESSAGE TO HECTOR */
+
+async function sendHectorMessage(event) {
+
+    event.preventDefault();
+
+    const input = document.getElementById("aiInput");
+    const sendButton = document.getElementById("aiSendButton");
+    const statusMessage = document.getElementById("aiStatusMessage");
+
+    const message = input.value.trim();
+
+    if (!message || sendButton.disabled) return;
+
+    addHectorMessage(message, "user");
+
+    input.value = "";
+    sendButton.disabled = true;
+
+    if (statusMessage) {
+        statusMessage.textContent = "HECTOR is processing your message...";
+    }
+
+    try {
+
+        const response = await fetch(
+            HECTOR_API_URL + "/api/chat",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    message: message
+                })
+            }
+        );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.error || "Message request failed");
+        }
+
+        addHectorMessage(
+            data.reply || "HECTOR received your message.",
+            "bot"
+        );
+
+        if (statusMessage) {
+            statusMessage.textContent = "Message received by HECTOR's backend.";
+        }
+
+    } catch (error) {
+
+        addHectorMessage(
+            "I couldn't reach my backend. Please check the connection and try again.",
+            "bot"
+        );
+
+        if (statusMessage) {
+            statusMessage.textContent = "Connection error: " + error.message;
+        }
+
+        checkHectorConnection();
+
+    } finally {
+
+        sendButton.disabled = false;
+        input.focus();
+
+    }
+}
+
+/* ==========================================
    STARTUP
 ========================================== */
 
 window.addEventListener("load", () => {
 
-    console.log("HECTOR 2.0 initialized.");
+    console.log("HECTOR 2.1 initialized.");
+
+    const aiForm = document.getElementById("aiForm");
+
+    if (aiForm) {
+        aiForm.addEventListener("submit", sendHectorMessage);
+    }
+
+    checkHectorConnection();
 
 });
 
-
-const HECTOR_API_URL = "https://hector-ai-ub0n.onrender.com";
-
-async function testHectorConnection() {
-    try {
-        const response = await fetch(
-            `${HECTOR_API_URL}/api/health`
-        );
-
-        if (!response.ok) {
-            throw new Error("Backend connection failed");
-        }
-
-        const data = await response.json();
-
-        console.log("HECTOR BACKEND:", data.status);
-        return data.status === "online";
-
-    } catch (error) {
-        console.error("HECTOR CONNECTION ERROR:", error);
-        return false;
-    }
-}
 
