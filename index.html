@@ -6,6 +6,108 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>HECTOR | Device Intelligence</title>
 <link rel="stylesheet" href="style.css">
+<style>
+/* HECTOR AI PAGE */
+.ai-panel {
+    background: linear-gradient(145deg, #101b35, #101027);
+    border: 1px solid #263d68;
+    border-radius: 18px;
+    padding: 22px;
+    margin: 22px 0;
+    box-shadow: 0 10px 35px #0004;
+}
+.ai-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+.ai-heading h2 {
+    color: #8dbdff;
+    margin: 0;
+}
+.ai-status {
+    color: #fbbf24;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+.ai-status.online { color: #4ade80; }
+.ai-status.offline { color: #fb7185; }
+.ai-description {
+    color: #aabbd6;
+    line-height: 1.6;
+}
+.ai-chat {
+    height: 360px;
+    overflow-y: auto;
+    background: #080e1c;
+    border: 1px solid #253454;
+    border-radius: 14px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+.ai-message {
+    max-width: 85%;
+    padding: 12px 15px;
+    border-radius: 13px;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+    white-space: pre-wrap;
+}
+.ai-message.bot {
+    align-self: flex-start;
+    background: #17294b;
+    color: #dceaff;
+    border: 1px solid #294777;
+}
+.ai-message.user {
+    align-self: flex-end;
+    background: #254b88;
+    color: white;
+}
+.ai-input-row {
+    display: flex;
+    gap: 10px;
+    margin-top: 14px;
+}
+.ai-input-row input {
+    flex: 1;
+    min-width: 0;
+    background: #080e1c;
+    color: white;
+    border: 1px solid #344b70;
+    border-radius: 10px;
+    padding: 14px;
+    font-size: 15px;
+}
+.ai-input-row button {
+    border: 0;
+    border-radius: 10px;
+    padding: 0 20px;
+    background: linear-gradient(135deg, #3478df, #7653d8);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+.ai-input-row button:disabled {
+    opacity: .5;
+    cursor: not-allowed;
+}
+.ai-small {
+    color: #8da2c2;
+    font-size: 12px;
+    margin-top: 12px;
+}
+@media(max-width:600px) {
+    .ai-input-row { flex-direction: column; }
+    .ai-input-row button { padding: 13px; }
+    .ai-message { max-width: 95%; }
+}
+</style>
 </head>
 <body>
 
@@ -37,10 +139,10 @@
     <button class="nav-btn active" onclick="showPage('system', this)">SYSTEM</button>
     <button class="nav-btn" onclick="showPage('browser', this)">BROWSER</button>
     <button class="nav-btn" onclick="showPage('network', this)">NETWORK & DIAGNOSTICS</button>
+    <button class="nav-btn" onclick="showPage('ai', this)">HECTOR AI</button>
 </nav>
 
 <!-- PAGE 1: SYSTEM -->
-
 <section class="page active" id="system">
 
     <section class="hero">
@@ -65,41 +167,35 @@
     </section>
 
     <section class="dashboard">
-
         <div class="metric-card">
             <span class="metric-icon">▦</span>
             <p>PROCESSOR THREADS</p>
             <h3 id="cpu">--</h3>
             <small>Logical processors</small>
         </div>
-
         <div class="metric-card">
             <span class="metric-icon">◈</span>
             <p>ESTIMATED RAM</p>
             <h3 id="ram">--</h3>
             <small>Browser-reported estimate</small>
         </div>
-
         <div class="metric-card">
             <span class="metric-icon">◉</span>
             <p>GRAPHICS PROCESSOR</p>
             <h3 id="gpu">--</h3>
             <small id="gpuDetail">Graphics information</small>
         </div>
-
         <div class="metric-card">
             <span class="metric-icon">▣</span>
             <p>BATTERY</p>
             <h3 id="battery">--</h3>
             <small id="batteryDetail">Battery information</small>
         </div>
-
     </section>
 
     <section class="details-panel">
         <p class="eyebrow">DEVICE PROFILE</p>
         <h2>Hardware Information</h2>
-
         <div class="detail-row"><span>Operating Platform</span><strong id="platform">Not scanned</strong></div>
         <div class="detail-row"><span>Screen Resolution</span><strong id="screen">Not scanned</strong></div>
         <div class="detail-row"><span>Device Pixel Ratio</span><strong id="pixelRatio">Not scanned</strong></div>
@@ -107,11 +203,9 @@
         <div class="detail-row"><span>Screen Color Depth</span><strong id="colorDepth">Not scanned</strong></div>
         <div class="detail-row"><span>Available RAM Estimate</span><strong id="ramDetail">Not scanned</strong></div>
     </section>
-
 </section>
 
 <!-- PAGE 2: BROWSER -->
-
 <section class="page" id="browser">
 
     <section class="hero">
@@ -123,7 +217,6 @@
     <section class="details-panel">
         <p class="eyebrow">CHROME VERSION EQUIVALENT</p>
         <h2>Browser Information</h2>
-
         <div class="detail-row"><span>Browser Name</span><strong id="browserName">Not scanned</strong></div>
         <div class="detail-row"><span>Browser Version</span><strong id="browserVersion">Not available</strong></div>
         <div class="detail-row"><span>Full User Agent</span><strong id="userAgent">Not scanned</strong></div>
@@ -142,7 +235,6 @@
     <section class="details-panel">
         <p class="eyebrow">WEB TECHNOLOGY</p>
         <h2>Browser Capabilities</h2>
-
         <div class="detail-row"><span>WebGPU Support</span><strong id="webgpu">Not scanned</strong></div>
         <div class="detail-row"><span>WebGL Support</span><strong id="webgl">Not scanned</strong></div>
         <div class="detail-row"><span>Service Workers</span><strong id="serviceWorker">Not scanned</strong></div>
@@ -154,55 +246,46 @@
     <section class="details-panel">
         <p class="eyebrow">DISPLAY INFORMATION</p>
         <h2>Browser Display</h2>
-
         <div class="detail-row"><span>Window Dimensions</span><strong id="windowSize">Not scanned</strong></div>
         <div class="detail-row"><span>Available Screen Area</span><strong id="availableScreen">Not scanned</strong></div>
         <div class="detail-row"><span>Color Scheme</span><strong id="colorScheme">Not scanned</strong></div>
     </section>
-
 </section>
 
 <!-- PAGE 3: NETWORK -->
-
 <section class="page" id="network">
 
     <section class="hero">
         <p class="eyebrow">PAGE 03 / NETWORK INTELLIGENCE</p>
         <h2>System Diagnostics.</h2>
         <p class="subtitle">Examine connectivity, storage availability, battery information and system capabilities.</p>
-
         <button onclick="runDiagnostics()">REFRESH DIAGNOSTICS</button>
     </section>
 
     <section class="dashboard">
-
         <div class="metric-card">
             <span class="metric-icon">⌁</span>
             <p>NETWORK STATUS</p>
             <h3 id="network">--</h3>
             <small id="networkDetail">Connection information</small>
         </div>
-
         <div class="metric-card">
             <span class="metric-icon">▤</span>
             <p>BROWSER STORAGE</p>
             <h3 id="storage">--</h3>
             <small id="storageDetail">Storage quota estimate</small>
         </div>
-
         <div class="metric-card">
             <span class="metric-icon">◷</span>
             <p>CONNECTION TYPE</p>
             <h3 id="connectionType">--</h3>
             <small>Browser-reported connection</small>
         </div>
-
     </section>
 
     <section class="details-panel">
         <p class="eyebrow">NETWORK ANALYSIS</p>
         <h2>Connection Information</h2>
-
         <div class="detail-row"><span>Internet Status</span><strong id="internetStatus">Not scanned</strong></div>
         <div class="detail-row"><span>Connection Type</span><strong id="networkType">Not available</strong></div>
         <div class="detail-row"><span>Estimated Download Speed</span><strong id="downloadSpeed">Not available</strong></div>
@@ -212,7 +295,6 @@
     <section class="details-panel">
         <p class="eyebrow">STORAGE INTELLIGENCE</p>
         <h2>Browser Storage</h2>
-
         <div class="detail-row"><span>Storage Quota</span><strong id="storageQuota">Not scanned</strong></div>
         <div class="detail-row"><span>Storage Used</span><strong id="storageUsed">Not scanned</strong></div>
         <div class="detail-row"><span>Storage Available</span><strong id="storageAvailable">Not scanned</strong></div>
@@ -222,26 +304,69 @@
     <section class="details-panel">
         <p class="eyebrow">DIAGNOSTIC REPORT</p>
         <h2>Device Test Results</h2>
-
         <div class="detail-row"><span>Battery Diagnostics</span><strong id="batteryTest">Not tested</strong></div>
         <div class="detail-row"><span>Graphics Diagnostics</span><strong id="graphicsTest">Not tested</strong></div>
         <div class="detail-row"><span>Storage Diagnostics</span><strong id="storageTest">Not tested</strong></div>
         <div class="detail-row"><span>Network Diagnostics</span><strong id="networkTest">Not tested</strong></div>
     </section>
+</section>
 
+<!-- PAGE 4: HECTOR AI -->
+<section class="page" id="ai">
+    <section class="hero">
+        <p class="eyebrow">PAGE 04 / ARTIFICIAL INTELLIGENCE</p>
+        <h2>Meet HECTOR AI.</h2>
+        <p class="subtitle">Your device intelligence assistant. Ask questions and explore your diagnostic system.</p>
+    </section>
+
+    <section class="ai-panel">
+        <div class="ai-heading">
+            <h2>H E C T O R <span style="color:#a78bfa">AI</span></h2>
+            <span id="hectorConnection" class="ai-status">CHECKING CONNECTION...</span>
+        </div>
+
+        <p class="ai-description">
+            HECTOR is connected to its cloud backend. Send a message to test the connection.
+        </p>
+
+        <div id="aiChat" class="ai-chat" aria-live="polite">
+            <div class="ai-message bot">
+                Hello! I'm HECTOR. My backend is being checked. Send me a message when you're ready!
+            </div>
+        </div>
+
+        <form id="aiForm" class="ai-input-row">
+            <input
+                id="aiInput"
+                type="text"
+                placeholder="Ask HECTOR something..."
+                maxlength="1000"
+                autocomplete="off"
+                required
+            >
+            <button id="aiSendButton" type="submit">SEND</button>
+        </form>
+
+        <p id="aiStatusMessage" class="ai-small">
+            Waiting for your message.
+        </p>
+        <p class="ai-small">
+            HECTOR's current starter backend can reply with a connection test message. Real AI will be connected in a later step.
+        </p>
+    </section>
 </section>
 
 <footer>
     HECTOR DEVICE INTELLIGENCE SYSTEM
-    <p>Version 2.0 | Smarter Device Diagnostics</p>
+    <p>Version 2.1 | Smarter Device Diagnostics</p>
 </footer>
 
 </main>
 
 <script src="script.js"></script>
-
 </body>
 </html>
+
 
 
 
